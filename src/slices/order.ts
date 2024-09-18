@@ -36,12 +36,14 @@ export const orderSlice = createSlice({
       })
       .addCase(
         makeNewOrder.fulfilled,
-        (state, { payload }: PayloadAction<TOrder>) => {
+        (state, action: PayloadAction<TOrder>) => {
           state.status = RequestStatus.Success;
-          state.info = payload;
-          console.log(state.info);
+          state.info = action.payload;
         }
-      );
+      )
+      .addCase(makeNewOrder.rejected, (state) => {
+        state.status = RequestStatus.Failed;
+      });
   },
   selectors: {
     orderState: (state) => state

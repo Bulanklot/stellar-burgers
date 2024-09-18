@@ -12,7 +12,7 @@ import {
 import '../../index.css';
 import styles from './app.module.css';
 
-import { AppHeader, IngredientDetails, Modal, OrderInfo } from '@components';
+import { IngredientDetails, Modal, OrderInfo } from '@components';
 import {
   Routes,
   Route,
@@ -22,9 +22,12 @@ import {
 } from 'react-router-dom';
 import { ProtectedRoute } from '../protected-route/protected-route';
 import { useNavigate } from 'react-router-dom';
-import { useDispatch } from '../../services/store';
+import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
 import { fetchIngredients } from '../../slices/ingredients';
+import { feetchFeeds } from '../../slices/feed';
+import { authCheck, checkUserAuth, getIsAuthChecked } from '../../slices/user';
+import { allOrders, getOrders } from '../../slices/orders';
 
 const App = () => {
   const navigate = useNavigate();
@@ -38,7 +41,17 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
+    dispatch(getOrders());
   }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(checkUserAuth())
+      .unwrap()
+      .catch((err) => {
+        console.log(err);
+      })
+      .finally(() => dispatch(authCheck()));
+  }, [checkUserAuth]);
 
   return (
     <div className={styles.app}>
@@ -49,7 +62,7 @@ const App = () => {
         <Route
           path='/login'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Login />
             </ProtectedRoute>
           }
@@ -57,7 +70,7 @@ const App = () => {
         <Route
           path='/register'
           element={
-            <ProtectedRoute>
+            <ProtectedRoute onlyUnAuth>
               <Register />
             </ProtectedRoute>
           }
@@ -78,6 +91,18 @@ const App = () => {
             </ProtectedRoute>
           }
         />
+        <Route
+          path='/ingredients/:id'
+          element={
+            <div className={styles.detailPageWrap}>
+              <p className={`text text_type_main-large ${styles.detailHeader}`}>
+                Детали ингридиента
+              </p>
+              <IngredientDetails />
+            </div>
+          }
+        />
+        <Route path='/feed/:number' element={<OrderInfo />} />
         <Route path='/profile'>
           <Route
             index

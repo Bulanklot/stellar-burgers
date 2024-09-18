@@ -7,6 +7,8 @@ import {
   resetConstructor
 } from '../../slices/burgerConstructor';
 import { makeNewOrder, orderState, resetOrder } from '../../slices/order';
+import { getUser } from '../../slices/user';
+import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {
   /** TODO: взять переменные constructorItems, orderRequest и orderModalData из стора */
@@ -15,11 +17,17 @@ export const BurgerConstructor: FC = () => {
   const dispatch = useDispatch();
   const constructorItems = items;
 
-  const orderRequest = status === RequestStatus.Success;
+  const orderRequest = status === RequestStatus.Loading;
 
   const orderModalData = info;
 
+  const user = useSelector(getUser);
+  const navigate = useNavigate();
+
   const onOrderClick = () => {
+    if (!user) {
+      navigate('/login');
+    }
     if (!constructorItems.bun || orderRequest) return;
     dispatch(
       makeNewOrder([
