@@ -6,11 +6,12 @@ import { allOrders, getOrders } from '../../slices/orders';
 
 export const ProfileOrders: FC = () => {
   /** TODO: взять переменную из стора */
-  const orders: TOrder[] = useSelector(allOrders);
+
   const dispatch = useDispatch();
   useEffect(() => {
     dispatch(getOrders);
-  }, [orders]);
+  }, [dispatch]);
+  const orders: TOrder[] = useSelector(allOrders);
 
   return <ProfileOrdersUI orders={orders} />;
 };
