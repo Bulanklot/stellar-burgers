@@ -41,7 +41,6 @@ const App = () => {
 
   useEffect(() => {
     dispatch(fetchIngredients());
-    dispatch(getOrders());
   }, [dispatch]);
 
   useEffect(() => {

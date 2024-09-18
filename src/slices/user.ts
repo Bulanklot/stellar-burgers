@@ -50,20 +50,6 @@ export const loginUser = createAsyncThunk(
   }
 );
 
-/*export const forgotPassword = createAsyncThunk(
-  'forgotPassword',
-  async (data: { email: string }) => {
-    forgotPassword(data);
-  }
-);
-
-export const resetPassword = createAsyncThunk(
-  'resetPassword',
-  async (data: { password: string; token: string }) => {
-    resetPasswordApi(data);
-  }
-);
-*/
 export const updateUser = createAsyncThunk(
   'updateUser',
   async (user: Partial<TRegisterData>) => updateUserApi(user)

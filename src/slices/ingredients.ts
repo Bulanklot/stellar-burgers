@@ -20,12 +20,7 @@ export const fetchIngredients = createAsyncThunk('getIngredients', async () =>
 export const ingredientsSlice = createSlice({
   name: 'ingredients',
   initialState,
-  reducers: {
-    /* addIngredients(state,action: PayloadAction<TIngredient[]>){
-            const {data} = action.payload;
-            state.ingredients.push(data);
-        }*/
-  },
+  reducers: {},
   selectors: {
     selectIngredients: (state) => state.ingredients,
     selectStatus: (state) => state.status
