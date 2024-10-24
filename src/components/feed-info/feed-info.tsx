@@ -3,7 +3,11 @@ import { FC, useEffect } from 'react';
 import { TOrder } from '@utils-types';
 import { FeedInfoUI } from '../ui/feed-info';
 import { useDispatch, useSelector } from '../../services/store';
-import { feedsState, feetchFeeds, getFeedsOrders } from '../../slices/feed';
+import {
+  feedsState,
+  feetchFeeds,
+  getFeedsOrders
+} from '../../slices/feed/feed';
 
 const getOrders = (orders: TOrder[], status: string): number[] =>
   orders
