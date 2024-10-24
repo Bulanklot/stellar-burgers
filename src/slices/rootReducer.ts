@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import { ingredientsSlice } from './ingredients';
-import { constructorSlice } from './burgerConstructor';
-import { orderSlice } from './order';
-import { feedsSlice } from './feed';
-import { ordersSlice } from './orders';
-import { userSlice } from './user';
+import { ingredientsSlice } from './ingredients/ingredients';
+import { constructorSlice } from './burger-constructor/burgerConstructor';
+import { orderSlice } from './order/order';
+import { feedsSlice } from './feed/feed';
+import { ordersSlice } from './orders/orders';
+import { userSlice } from './user/user';
 
 const rootReducer = combineReducers({
   ingredients: ingredientsSlice.reducer,

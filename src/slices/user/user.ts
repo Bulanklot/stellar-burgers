@@ -10,8 +10,8 @@ import {
 } from '@api';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RequestStatus, TUser } from '@utils-types';
-import { isActionPending, isActionRejected } from '../utils/action-util';
-import { deleteCookie, setCookie } from '../utils/cookie';
+import { isActionPending, isActionRejected } from '../../utils/action-util';
+import { deleteCookie, setCookie } from '../../utils/cookie';
 
 export interface TUserState {
   isAuthChecked: boolean;
@@ -25,7 +25,7 @@ export const initialState: TUserState = {
   status: RequestStatus.Idle
 };
 
-export const checkUserAuth = createAsyncThunk('getUser', async () => {
+export const checkUserAuth = createAsyncThunk('checkUserAuth', async () => {
   const response = await getUserApi();
   return response;
 });
@@ -92,10 +92,28 @@ export const userSlice = createSlice({
         state.data = action.payload.user;
         state.status = RequestStatus.Success;
       })
-      .addMatcher(isActionPending(userSlice.name), (state) => {
+      .addCase(checkUserAuth.pending, (state) => {
         state.status = RequestStatus.Loading;
       })
-      .addMatcher(isActionRejected(userSlice.name), (state) => {
+      .addCase(registerUser.pending, (state) => {
+        state.status = RequestStatus.Loading;
+      })
+      .addCase(loginUser.pending, (state) => {
+        state.status = RequestStatus.Loading;
+      })
+      .addCase(updateUser.pending, (state) => {
+        state.status = RequestStatus.Loading;
+      })
+      .addCase(checkUserAuth.rejected, (state) => {
+        state.status = RequestStatus.Failed;
+      })
+      .addCase(registerUser.rejected, (state) => {
+        state.status = RequestStatus.Failed;
+      })
+      .addCase(loginUser.rejected, (state) => {
+        state.status = RequestStatus.Failed;
+      })
+      .addCase(updateUser.rejected, (state) => {
         state.status = RequestStatus.Failed;
       });
   },

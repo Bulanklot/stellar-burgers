@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from '../../services/store';
 import {
   constructorState,
   resetConstructor
-} from '../../slices/burgerConstructor';
-import { makeNewOrder, orderState, resetOrder } from '../../slices/order';
-import { getUser } from '../../slices/user';
+} from '../../slices/burger-constructor/burgerConstructor';
+import { makeNewOrder, orderState, resetOrder } from '../../slices/order/order';
+import { getUser } from '../../slices/user/user';
 import { useNavigate } from 'react-router-dom';
 
 export const BurgerConstructor: FC = () => {

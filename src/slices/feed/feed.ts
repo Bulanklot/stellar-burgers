@@ -2,7 +2,7 @@ import { getFeedsApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder, TOrdersData } from '@utils-types';
 
-interface TFeedState {
+export interface TFeedState {
   orders: TOrder[];
   total: number;
   totalToday: number;
@@ -16,7 +16,7 @@ const initialState: TFeedState = {
   status: RequestStatus.Idle
 };
 
-export const feetchFeeds = createAsyncThunk('getFeeds', async () =>
+export const feetchFeeds = createAsyncThunk('feetchFeeds', async () =>
   getFeedsApi()
 );
 
