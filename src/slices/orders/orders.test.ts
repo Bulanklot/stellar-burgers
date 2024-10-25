@@ -2,18 +2,13 @@ import { RequestStatus } from '@utils-types';
 import {
   getOrderByNumber,
   getOrders,
+  initialState,
   ordersSlice,
   TOrdersSliceState
 } from './orders';
 import { error } from 'console';
 
 describe('test ordersSlice reducer', () => {
-  const initialState: TOrdersSliceState = {
-    orders: [],
-    orderByNumber: [],
-    status: RequestStatus.Idle
-  };
-
   const mockOrdersData = [
     {
       _id: '66e9f8b2119d45001b507802',

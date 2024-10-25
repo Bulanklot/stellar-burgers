@@ -8,7 +8,7 @@ export interface TOrdersSliceState {
   status: RequestStatus;
 }
 
-const initialState: TOrdersSliceState = {
+export const initialState: TOrdersSliceState = {
   orders: [],
   orderByNumber: [],
   status: RequestStatus.Idle

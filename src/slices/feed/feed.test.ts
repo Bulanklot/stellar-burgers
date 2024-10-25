@@ -1,14 +1,7 @@
 import { RequestStatus } from '@utils-types';
-import { feedsSlice, feetchFeeds, TFeedState } from './feed';
+import { feedsSlice, feetchFeeds, initialState, TFeedState } from './feed';
 
 describe('feedSlice test', () => {
-  const initialState: TFeedState = {
-    orders: [],
-    total: 0,
-    totalToday: 0,
-    status: RequestStatus.Idle
-  };
-
   const mockResponseData = {
     success: true,
     orders: [

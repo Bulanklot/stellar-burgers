@@ -8,7 +8,7 @@ export interface TConstructorData {
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: TConstructorData = {
+export const initialState: TConstructorData = {
   bun: null,
   ingredients: []
 };

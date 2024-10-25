@@ -1,8 +1,8 @@
 import { BurgerConstructor } from '@components';
-import { initialState } from '../user/user';
 import {
   addToConstructor,
   constructorSlice,
+  initialState,
   removeFromConstructor,
   reorderConstructor,
   TConstructorData
@@ -51,11 +51,6 @@ const mockIngredients = [
 ];
 
 describe('burgerConstructor', () => {
-  const initialState: TConstructorData = {
-    bun: null,
-    ingredients: []
-  };
-
   it('add ingredients to constructor works correctly', () => {
     const expectedState = {
       ...initialState,

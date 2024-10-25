@@ -2,15 +2,11 @@ import { RequestStatus } from '@utils-types';
 import {
   fetchIngredients,
   ingredientsSlice,
+  initialState,
   TIngredientsData
 } from './ingredients';
 
 describe('ingredientsSlice test', () => {
-  const initialState: TIngredientsData = {
-    ingredients: [],
-    status: RequestStatus.Idle
-  };
-
   const mockIngredients = [
     {
       _id: '643d69a5c3f7b9001cfa0941',

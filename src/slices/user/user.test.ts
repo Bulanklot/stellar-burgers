@@ -3,6 +3,7 @@ import {
   authCheck,
   checkUserAuth,
   getUser,
+  initialState,
   loginUser,
   registerUser,
   TUserState,
@@ -14,12 +15,6 @@ import { TLoginData } from '@api';
 import { act } from 'react-dom/test-utils';
 
 describe('userSlice', () => {
-  const initialState: TUserState = {
-    isAuthChecked: false,
-    data: null,
-    status: RequestStatus.Idle
-  };
-
   const userRegistrationData = {
     email: 'test@mail.com',
     name: 'name',

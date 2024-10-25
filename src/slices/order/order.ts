@@ -7,7 +7,7 @@ export interface TOrderState {
   status: RequestStatus;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   info: null,
   status: RequestStatus.Idle
 };

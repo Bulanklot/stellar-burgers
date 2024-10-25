@@ -1,12 +1,13 @@
 import { RequestStatus, TOrder } from '@utils-types';
-import { makeNewOrder, orderSlice, resetOrder, TOrderState } from './order';
+import {
+  initialState,
+  makeNewOrder,
+  orderSlice,
+  resetOrder,
+  TOrderState
+} from './order';
 
 describe('orderSlice test', () => {
-  const initialState: TOrderState = {
-    info: null,
-    status: RequestStatus.Idle
-  };
-
   const mockOrderData: TOrder = {
     _id: '671a8f96d829be001c7787ea',
     ingredients: [

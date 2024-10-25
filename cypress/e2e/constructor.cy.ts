@@ -2,16 +2,20 @@ import { access } from 'fs';
 import { deleteCookie } from '../../src/utils/cookie';
 
 ///
+const bunIngredients = '[data-cy=bun-ingredients]';
+const mainsIngredietns = '[data-cy=mains-ingredients]';
+const saucesIngredients = '[data-cy=sauces-ingredients]';
+const selectedIngredients = '[data-cy=constructor-ingredients]';
 
 describe('add ingredients to constructor', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000');
+    cy.visit('');
   });
 
   it('add bun', () => {
-    cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
+    cy.get(bunIngredients).contains('Добавить').click();
     cy.get('[data-cy=constructor-bun-1]')
       .contains('Ингредиент 1')
       .should('exist');
@@ -22,14 +26,10 @@ describe('add ingredients to constructor', () => {
   });
 
   it('add ingredient', () => {
-    cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('Ингредиент 2')
-      .should('exist');
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('Ингредиент 4')
-      .should('exist');
+    cy.get(mainsIngredietns).contains('Добавить').click();
+    cy.get(saucesIngredients).contains('Добавить').click();
+    cy.get(selectedIngredients).contains('Ингредиент 2').should('exist');
+    cy.get(selectedIngredients).contains('Ингредиент 4').should('exist');
   });
 });
 
@@ -37,7 +37,7 @@ describe('ingredient modal works', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000');
+    cy.visit('');
   });
   it('open modal', () => {
     cy.contains('Детали ингредиента').should('not.exist');
@@ -61,10 +61,16 @@ describe('ingredient modal works', () => {
 describe('Orders modal works', () => {
   beforeEach(() => {
     cy.intercept('GET', 'api/auth/user', { fixture: 'user.json' });
-    cy.intercept('POST', 'api/orders', { fixture: 'post_order.json' });
+    cy.intercept('POST', 'api/orders', { fixture: 'post_order.json' }).as(
+      'postOrder'
+    );
     cy.intercept('GET', 'api/ingredients', { fixture: 'ingredients.json' });
     cy.viewport(1300, 800);
-    cy.visit('http://localhost:4000');
+    cy.visit('');
+    cy.get(bunIngredients).as('buns');
+    cy.get(mainsIngredietns).as('mains');
+    cy.get(saucesIngredients).as('sauces');
+    cy.get(selectedIngredients).as('selected');
     window.localStorage.setItem(
       'refreshToken',
       JSON.stringify('test-refreshToken')
@@ -76,27 +82,26 @@ describe('Orders modal works', () => {
     cy.setCookie('accessTokent', '');
   });
   it('make order on click', () => {
-    cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
+    cy.get('@buns').contains('Добавить').click();
+    cy.get('@mains').contains('Добавить').click();
+    cy.get('@sauces').contains('Добавить').click();
     cy.contains('Оформить заказ').click();
+    cy.wait('@postOrder')
+      .its('request.body')
+      .should('deep.equal', {
+        ingredients: ['1', '2', '4', '1']
+      });
     cy.get('#modals').contains('123456').should('exist');
   });
   it('close order modal and reset constructor on click ', () => {
-    cy.get('[data-cy=bun-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=mains-ingredients]').contains('Добавить').click();
-    cy.get('[data-cy=sauces-ingredients]').contains('Добавить').click();
+    cy.get('@buns').contains('Добавить').click();
+    cy.get('@mains').contains('Добавить').click();
+    cy.get('@sauces').contains('Добавить').click();
     cy.contains('Оформить заказ').click();
     cy.get('[data-cy=modal-close-button]').click();
     cy.contains('идентификатор заказа').should('not.exist');
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('Ингредиент 2')
-      .should('not.exist');
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('Ингредиент 4')
-      .should('not.exist');
-    cy.get('[data-cy=constructor-ingredients]')
-      .contains('Ингредиент 1')
-      .should('not.exist');
+    cy.get('@selected').contains('Ингредиент 2').should('not.exist');
+    cy.get('@selected').contains('Ингредиент 4').should('not.exist');
+    cy.get('@selected').contains('Ингредиент 1').should('not.exist');
   });
 });
