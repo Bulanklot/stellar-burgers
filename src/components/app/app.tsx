@@ -24,10 +24,14 @@ import { ProtectedRoute } from '../protected-route/protected-route';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/store';
 import { useEffect } from 'react';
-import { fetchIngredients } from '../../slices/ingredients';
-import { feetchFeeds } from '../../slices/feed';
-import { authCheck, checkUserAuth, getIsAuthChecked } from '../../slices/user';
-import { allOrders, getOrders } from '../../slices/orders';
+import { fetchIngredients } from '../../slices/ingredients/ingredients';
+import { feetchFeeds } from '../../slices/feed/feed';
+import {
+  authCheck,
+  checkUserAuth,
+  getIsAuthChecked
+} from '../../slices/user/user';
+import { allOrders, getOrders } from '../../slices/orders/orders';
 
 const App = () => {
   const navigate = useNavigate();
@@ -135,7 +139,7 @@ const App = () => {
           <Route
             path='/ingredients/:id'
             element={
-              <Modal title={'Детали ингридиента'} onClose={handleModalClose}>
+              <Modal title={'Детали ингредиента'} onClose={handleModalClose}>
                 <IngredientDetails />
               </Modal>
             }

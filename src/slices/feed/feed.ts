@@ -2,21 +2,21 @@ import { getFeedsApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder, TOrdersData } from '@utils-types';
 
-interface TFeedState {
+export interface TFeedState {
   orders: TOrder[];
   total: number;
   totalToday: number;
   status: RequestStatus;
 }
 
-const initialState: TFeedState = {
+export const initialState: TFeedState = {
   orders: [],
   total: 0,
   totalToday: 0,
   status: RequestStatus.Idle
 };
 
-export const feetchFeeds = createAsyncThunk('getFeeds', async () =>
+export const feetchFeeds = createAsyncThunk('feetchFeeds', async () =>
   getFeedsApi()
 );
 

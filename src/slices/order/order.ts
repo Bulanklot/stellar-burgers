@@ -2,12 +2,12 @@ import { orderBurgerApi } from '@api';
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { RequestStatus, TOrder } from '@utils-types';
 
-interface TOrderState {
+export interface TOrderState {
   info: TOrder | null;
   status: RequestStatus;
 }
 
-const initialState: TOrderState = {
+export const initialState: TOrderState = {
   info: null,
   status: RequestStatus.Idle
 };

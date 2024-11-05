@@ -3,12 +3,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TConstructorIngredient, TIngredient } from '@utils-types';
 import { v4 as uuid } from 'uuid';
 
-interface TConstructorData {
+export interface TConstructorData {
   bun: TConstructorIngredient | null;
   ingredients: TConstructorIngredient[];
 }
 
-const initialState: TConstructorData = {
+export const initialState: TConstructorData = {
   bun: null,
   ingredients: []
 };

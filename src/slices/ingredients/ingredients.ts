@@ -3,12 +3,12 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { TIngredient, RequestStatus } from '@utils-types';
 import { INGREDIENTS_SLICE_NAME } from 'src/utils/constants';
 
-interface TIngredientsData {
+export interface TIngredientsData {
   ingredients: TIngredient[];
   status: RequestStatus;
 }
 
-const initialState: TIngredientsData = {
+export const initialState: TIngredientsData = {
   ingredients: [],
   status: RequestStatus.Idle
 };
